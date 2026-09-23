@@ -20,10 +20,20 @@ set ok_count=0
 set fail_count=0
 
 REM 2) [se precisar] Verificar Admin (Peca 7)
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Precisa ser Admin.
+    exit /b 1
+pause
+)
 
 REM 3) for em "apps" (Peca 2):
 REM    - instalar / [ja instalado? Peca 8] / [tentar de novo Peca 9]
 for %%A in (%apps%) do (
+    winget list --id %%A -e >nul 2>&1
+if %errorlevel% equ 0 (
+echo [FALHA] %%A já instalado! >> %LOGFILE%
+) else (
     winget install --id %%A -e --silent --accept-package-agreements --accept-source-agreements
 if !errorlevel! neq 0 (
         echo [FALHA] %%A >> %LOGFILE%
@@ -32,6 +42,9 @@ if !errorlevel! neq 0 (
         echo [OK] %%A >> %LOGFILE%
         set /a ok_count+=1
     )
+
+)
+
 )
 
 
@@ -42,3 +55,6 @@ echo Sucesso: !ok_count! ^| Falhas: !fail_count! >> %LOGFILE%
 REM 5) [se precisar] os dois requisitos do grupo
 
 pause
+
+
+
