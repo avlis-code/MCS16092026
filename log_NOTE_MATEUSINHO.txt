@@ -1,0 +1,5 @@
+Inicio: 23/09/2026 15:59:33,32 
+[OK] Notepad++.Notepad++ 
+[OK] Microsoft.PowerToys 
+[FALHA] Microsoft.WindowsTerminalX 
+Sucesso: 2 | Falhas: 1 
